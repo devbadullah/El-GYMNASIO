@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL GYMNASIO - Transform Your Body</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gym-primary': '#ff6b35',
+                        'gym-secondary': '#1a1a1a',
+                        'gym-dark': '#0f0f0f',
+                        'gym-light': '#f8f9fa'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+            }
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.8), rgba(26, 26, 26, 0.9)), 
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gym-dark text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-gym-dark/95 backdrop-blur-sm z-50 border-b border-gym-primary/20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="logo">
+                    <h1 class="text-3xl font-bold text-gym-primary">EL GYMNASIO</h1>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button id="menu-toggle" class="lg:hidden">
+                    <i class='bx bx-menu text-3xl text-white'></i>
+                </button>
+
+                <!-- Navigation -->
+                <nav id="navbar" class="hidden lg:flex space-x-8">
+                    <a href="#home" class="text-white hover:text-gym-primary transition-colors duration-300 font-medium">Home</a>
+                    <a href="#about" class="text-white hover:text-gym-primary transition-colors duration-300 font-medium">About</a>
+                    <a href="#services" class="text-white hover:text-gym-primary transition-colors duration-300 font-medium">Services</a>
+                    <a href="#contact" class="text-white hover:text-gym-primary transition-colors duration-300 font-medium">Contact</a>
+                </nav>
+
+                <!-- Login Button -->
+                <button class="hidden lg:block bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:scale-105">
+                    Login
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav id="mobile-navbar" class="lg:hidden hidden mt-4 space-y-4">
+                <a href="#home" class="block text-white hover:text-gym-primary transition-colors duration-300 font-medium">Home</a>
+                <a href="#about" class="block text-white hover:text-gym-primary transition-colors duration-300 font-medium">About</a>
+                <a href="#services" class="block text-white hover:text-gym-primary transition-colors duration-300 font-medium">Services</a>
+                <a href="#contact" class="block text-white hover:text-gym-primary transition-colors duration-300 font-medium">Contact</a>
+                <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300 w-full">
+                    Login
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="container mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left animate-fade-in-up">
+                    <h2 class="text-2xl md:text-3xl font-light mb-4"></h2>
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-gym-primary to-orange-400 bg-clip-text text-transparent">
+                        EL GYMNASIO
+                    </h1>
+                    <h3 class="text-2xl md:text-3xl font-medium mb-8">More Than A GYM<span class="text-gym-primary"> It's A Lifestyle</span> <span class="text-gym-primary"></span></h3>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
+                        Join the ultimate fitness community at EL GYMNASIO. Our state-of-the-art facility, expert trainers, and supportive environment will help you achieve your fitness goals and transform your life.
+                    </p>
+                    
+                    <!-- Social Media Icons -->
+                    <div class="flex justify-center lg:justify-start space-x-4 mb-8">
+                        <a href="#" class="w-12 h-12 border-2 border-gym-primary rounded-full flex items-center justify-center text-gym-primary hover:bg-gym-primary hover:text-white transition-all duration-300">
+                            <i class='bx bxl-facebook text-xl'></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 border-2 border-gym-primary rounded-full flex items-center justify-center text-gym-primary hover:bg-gym-primary hover:text-white transition-all duration-300">
+                            <i class='bx bxl-twitter text-xl'></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 border-2 border-gym-primary rounded-full flex items-center justify-center text-gym-primary hover:bg-gym-primary hover:text-white transition-all duration-300">
+                            <i class='bx bxl-instagram text-xl'></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 border-2 border-gym-primary rounded-full flex items-center justify-center text-gym-primary hover:bg-gym-primary hover:text-white transition-all duration-300">
+                            <i class='bx bxl-youtube text-xl'></i>
+                        </a>
+                    </div>
+                    
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 animate-pulse-glow">
+                        Start Your Journey
+                    </button>
+                </div>
+                
+                <div class="flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Gym Equipment" 
+                             class="w-full max-w-md rounded-2xl shadow-2xl border-4 border-gym-primary/30">
+                        <div class="absolute -top-4 -right-4 w-8 h-8 bg-gym-primary rounded-full animate-ping"></div>
+                        <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-orange-400 rounded-full animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gym-secondary">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1623874514711-0f321325f318?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Gym Interior" 
+                         class="w-full max-w-lg rounded-2xl shadow-2xl">
+                </div>
+                
+                <div>
+                    <h2 class="text-5xl font-bold mb-6">About <span class="text-gym-primary">EL GYMNASIO</span></h2>
+                    <h3 class="text-2xl font-semibold mb-4 text-gym-primary">Your Fitness Destination!</h3>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                        At EL GYMNASIO, we believe fitness is not just about building muscle or losing weight – it's about building confidence, discipline, and a healthier lifestyle. Our modern facility features cutting-edge equipment, experienced personal trainers, and a motivating community atmosphere.
+                    </p>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                        Whether you're a beginner starting your fitness journey or an experienced athlete looking to reach new heights, we have everything you need to succeed. Join our family and discover what your body is truly capable of achieving.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gym-dark">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-16">Our <span class="text-gym-primary">Services</span></h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Personal Training -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-dumbbell text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Personal Training</h3>
+                    <p class="text-gray-300 mb-6">
+                        Get personalized workout plans and one-on-one coaching from our certified trainers. Achieve your goals faster with customized training programs designed just for you.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Group Classes -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-group text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Group Classes</h3>
+                    <p class="text-gray-300 mb-6">
+                        Join our energetic group fitness classes including HIIT, Yoga, Zumba, and CrossFit. Experience the motivation and camaraderie of working out with others.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Nutrition Coaching -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-food-menu text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Nutrition Coaching</h3>
+                    <p class="text-gray-300 mb-6">
+                        Complement your workouts with proper nutrition guidance. Our nutritionists will help you create meal plans that support your fitness goals and lifestyle.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Strength Training -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-body text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Strength Training</h3>
+                    <p class="text-gray-300 mb-6">
+                        Build muscle and increase strength with our comprehensive weight training programs. Access to professional-grade equipment and expert guidance.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Cardio Programs -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-run text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Cardio Programs</h3>
+                    <p class="text-gray-300 mb-6">
+                        Improve your cardiovascular health with our variety of cardio equipment and programs. From treadmills to rowing machines, we have it all.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+
+                <!-- Recovery & Wellness -->
+                <div class="service-card bg-gym-secondary p-8 rounded-2xl text-center border border-gym-primary/20 hover:border-gym-primary transition-all duration-300">
+                    <i class='bx bx-spa text-6xl text-gym-primary mb-6'></i>
+                    <h3 class="text-2xl font-bold mb-4">Recovery & Wellness</h3>
+                    <p class="text-gray-300 mb-6">
+                        Recovery is just as important as training. Enjoy our sauna, steam room, and massage therapy services to help your body recover and rejuvenate.
+                    </p>
+                    <button class="bg-gym-primary hover:bg-gym-primary/80 px-6 py-2 rounded-full font-semibold transition-all duration-300">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gym-secondary">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-16">Contact <span class="text-gym-primary">Us!</span></h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Full Name" 
+                                   class="w-full p-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300">
+                            <input type="email" placeholder="Email Address" 
+                                   class="w-full p-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300">
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="tel" placeholder="Phone Number" 
+                                   class="w-full p-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300">
+                            <input type="text" placeholder="Subject" 
+                                   class="w-full p-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300">
+                        </div>
+                        <textarea rows="6" placeholder="Your Message" 
+                                  class="w-full p-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300 resize-none"></textarea>
+                        <button type="submit" 
+                                class="bg-gym-primary hover:bg-gym-primary/80 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-8 text-gym-primary">Get In Touch</h3>
+                        <p class="text-gray-300 text-lg mb-8">
+                            Ready to start your fitness journey? Contact us today to learn more about our membership options, schedule a tour, or speak with one of our fitness consultants.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gym-primary rounded-full flex items-center justify-center">
+                                <i class='bx bx-map text-xl text-white'></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Address</h4>
+                                <p class="text-gray-300">123 Fitness Street, Gym City, GC 12345</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gym-primary rounded-full flex items-center justify-center">
+                                <i class='bx bx-phone text-xl text-white'></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Phone</h4>
+                                <p class="text-gray-300">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gym-primary rounded-full flex items-center justify-center">
+                                <i class='bx bx-envelope text-xl text-white'></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Email</h4>
+                                <p class="text-gray-300">info@elgymnasio.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gym-primary rounded-full flex items-center justify-center">
+                                <i class='bx bx-time text-xl text-white'></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Hours</h4>
+                                <p class="text-gray-300">Mon-Fri: 5AM-11PM<br>Sat-Sun: 6AM-10PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gym-dark py-8 border-t border-gym-primary/20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-400">&copy; 2025 EL GYMNASIO. All Rights Reserved.</p>
+                </div>
+                <div>
+                    <a href="#home" class="inline-flex items-center justify-center w-12 h-12 bg-gym-primary rounded-lg hover:bg-gym-primary/80 transition-all duration-300 hover:scale-105">
+                        <i class='bx bx-up-arrow-alt text-2xl text-white'></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
