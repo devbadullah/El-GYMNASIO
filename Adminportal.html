@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL GYMNASIO - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gym-primary': '#ff6b35',
+                        'gym-secondary': '#1a1a1a',
+                        'gym-dark': '#0f0f0f',
+                        'gym-light': '#f8f9fa'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'fade-in-left': 'fadeInLeft 1s ease-out',
+                        'fade-in-right': 'fadeInRight 1s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'pulse-glow-green': 'pulseGlowGreen 2s infinite',
+                        'pulse-glow-blue': 'pulseGlowBlue 2s infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'bounce-slow': 'bounceSlow 2s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {0%,to{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeInLeft {0%,to{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes fadeInRight {0%,to{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes pulseGlow {0%,100%{box-shadow:0 0 20px rgba(255,107,53,.4)}50%{box-shadow:0 0 30px rgba(255,107,53,.8)}}
+        @keyframes pulseGlowGreen {0%,100%{box-shadow:0 0 20px rgba(34,197,94,.4)}50%{box-shadow:0 0 30px rgba(34,197,94,.8)}}
+        @keyframes pulseGlowBlue {0%,100%{box-shadow:0 0 20px rgba(37,99,235,.4)}50%{box-shadow:0 0 30px rgba(37,99,235,.8)}}
+        @keyframes bounceSlow {0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
+        @keyframes slideIn {0%,to{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+        
+        .dashboard-bg {
+            background: linear-gradient(135deg, rgba(15, 15, 15, .95), rgba(26, 26, 26, .95)), 
+                        url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .card-hover {
+            transition: all .3s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, .3);
+        }
+
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stats-counter {
+            font-family: 'Courier New', monospace;
+        }
+
+        .modal {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 15, .9);
+        }
+
+        .notification {
+            transition: all .3s ease-in-out;
+        }
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gym-dark text-white min-h-screen">
+    <div id="notification" class="fixed top-20 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform -translate-y-10 opacity-0 notification z-50">
+        <div class="flex items-center">
+            <i class='bx bx-check-circle mr-2'></i>
+            <span id="notificationText">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <header class="fixed top-0 left-0 w-full bg-gym-dark/95 backdrop-blur-sm z-50 border-b border-gym-primary/20">
+        <div class="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+            <div class="flex justify-between items-center">
+                <div class="logo animate-fade-in-left">
+                    <img src="logo.png" alt="Logo" class="h-10 sm:h-12 w-auto hover:scale-110 transition-transform duration-300">
+                    <span class="text-xs sm:text-sm text-gray-400">Admin Dashboard</span>
+                </div>
+                
+                <div class="flex items-center space-x-2 sm:space-x-6 animate-fade-in-right">
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gym-primary rounded-full flex items-center justify-center">
+                            <i class='bx bx-user text-white text-lg sm:text-xl'></i>
+                        </div>
+                        <div>
+                            <p class="text-sm sm:text-base font-semibold">Admin Panel</p>
+                            <p class="text-xs sm:text-sm text-gray-400">Welcome back!</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-semibold transition-all duration-300 flex items-center text-sm sm:text-base">
+                        <i class='bx bx-log-out mr-1 sm:mr-2'></i>
+                        <span class="hidden sm:inline">Logout</span>
+                        <span class="sm:hidden">Exit</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-bg pt-20 sm:pt-24 min-h-screen">
+        <div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <div class="text-center mb-8 sm:mb-12 animate-fade-in-up">
+                <h2 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-3 sm:mb-4">
+                    Welcome to <span class="text-gym-primary">Admin Panel</span>
+                </h2>
+                <p class="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 px-4">Manage your gym operations with powerful tools</p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
+                    <div class="bg-gym-secondary/80 p-4 sm:p-6 rounded-xl border border-gym-primary/20 floating-animation" style="animation-delay: 0s;">
+                        <i class='bx bx-group text-2xl sm:text-3xl lg:text-4xl text-gym-primary mb-2 sm:mb-3'></i>
+                        <div class="stats-counter text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">250+</div>
+                        <p class="text-xs sm:text-sm text-gray-400">Total Members</p>
+                    </div>
+                    
+                    <div class="bg-gym-secondary/80 p-4 sm:p-6 rounded-xl border border-gym-primary/20 floating-animation" style="animation-delay: 0.2s;">
+                        <i class='bx bx-dumbbell text-2xl sm:text-3xl lg:text-4xl text-gym-primary mb-2 sm:mb-3'></i>
+                        <div class="stats-counter text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">15</div>
+                        <p class="text-xs sm:text-sm text-gray-400">Active Trainers</p>
+                    </div>
+                    
+                    <div class="bg-gym-secondary/80 p-4 sm:p-6 rounded-xl border border-gym-primary/20 floating-animation" style="animation-delay: 0.4s;">
+                        <i class='bx bx-food-menu text-2xl sm:text-3xl lg:text-4xl text-gym-primary mb-2 sm:mb-3'></i>
+                        <div class="stats-counter text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">8</div>
+                        <p class="text-xs sm:text-sm text-gray-400">Nutritionists</p>
+                    </div>
+                    
+                    <div class="bg-gym-secondary/80 p-4 sm:p-6 rounded-xl border border-gym-primary/20 floating-animation" style="animation-delay: 0.6s;">
+                        <i class='bx bx-check-circle text-2xl sm:text-3xl lg:text-4xl text-gym-primary mb-2 sm:mb-3'></i>
+                        <div class="stats-counter text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">98%</div>
+                        <p class="text-xs sm:text-sm text-gray-400">Attendance Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
+                <div class="card-hover bg-gym-secondary/80 p-6 sm:p-8 rounded-2xl border border-gym-primary/20 text-center animate-fade-in-left">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gym-primary rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-glow">
+                            <i class='bx bx-user-plus text-3xl sm:text-4xl text-white'></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">Member Registration</h3>
+                        <p class="text-sm sm:text-base lg:text-lg text-gray-300 mb-4 sm:mb-6 px-2">
+                            Manage member registrations, view member profiles, update membership plans, and handle member onboarding processes.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button onclick="openModal('registrationModal')" class="w-full bg-gym-primary hover:bg-gym-primary/80 py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                            <i class='bx bx-plus mr-2'></i>
+                            Add New Member
+                        </button>
+                        <button onclick="viewMembers()" class="w-full border-2 border-gym-primary text-gym-primary hover:bg-gym-primary hover:text-white py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base">
+                            <i class='bx bx-list-ul mr-2'></i>
+                            View All Members
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gym-secondary/80 p-6 sm:p-8 rounded-2xl border border-gym-primary/20 text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-glow-green">
+                            <i class='bx bx-calendar-check text-3xl sm:text-4xl text-white'></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">Attendance Management</h3>
+                        <p class="text-sm sm:text-base lg:text-lg text-gray-300 mb-4 sm:mb-6 px-2">
+                            Track member attendance, generate attendance reports, and monitor gym usage patterns for better management.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button onclick="openModal('attendanceModal')" class="w-full bg-green-600 hover:bg-green-700 py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                            <i class='bx bx-check mr-2'></i>
+                            Mark Attendance
+                        </button>
+                        <button onclick="viewAttendance()" class="w-full border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base">
+                            <i class='bx bx-bar-chart-alt-2 mr-2'></i>
+                            View Reports
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gym-secondary/80 p-6 sm:p-8 rounded-2xl border border-gym-primary/20 text-center animate-fade-in-right" style="animation-delay: 0.4s;">
+                    <div class="mb-6">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-glow-blue">
+                            <i class='bx bx-group text-3xl sm:text-4xl text-white'></i>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">Staff Management</h3>
+                        <p class="text-sm sm:text-base lg:text-lg text-gray-300 mb-4 sm:mb-6 px-2">
+                            Manage trainer and nutritionist profiles, update their specializations, schedules, and create customized plans.
+                        </p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <button onclick="openModal('trainerModal')" class="w-full bg-blue-600 hover:bg-blue-700 py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                            <i class='bx bx-dumbbell mr-2'></i>
+                            Manage Trainers
+                        </button>
+                        <button onclick="openModal('nutritionistModal')" class="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-3 px-4 sm:px-6 rounded-lg font-semibold transition-all duration-300 text-sm sm:text-base">
+                            <i class='bx bx-food-menu mr-2'></i>
+                            Manage Nutritionists
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('block');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('block');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showNotification('You have been logged out successfully!');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            }
+        }
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tooltips would be initialized here
+        });
+    </script>
+</body>
+</html>

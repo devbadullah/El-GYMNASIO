@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EL GYMNASIO - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gym-primary': '#ff6b35',
+                        'gym-secondary': '#1a1a1a',
+                        'gym-dark': '#0f0f0f',
+                        'gym-light': '#f8f9fa'
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'pulse-glow': 'pulseGlow 2s infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+            }
+        }
+
+        .login-bg {
+            background: linear-gradient(135deg, rgba(15, 15, 15, 0.9), rgba(26, 26, 26, 0.95)), 
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .form-container {
+            backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gym-dark text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-gym-dark/95 backdrop-blur-sm z-50 border-b border-gym-primary/20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+            <img src="logo.png" alt="Logo" class="h-10 sm:h-12 w-auto hover:scale-110 transition-transform duration-300">
+                
+                <nav class="flex space-x-8">
+                    <a href="#" onclick="goBack()" class="text-white hover:text-gym-primary transition-colors duration-300 font-medium flex items-center">
+                        <i class='bx bx-arrow-back mr-2'></i>Back to Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="login-bg min-h-screen flex items-center justify-center py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-md mx-auto">
+                <div class="form-container rounded-2xl p-8 border border-gym-primary/20 animate-fade-in-up">
+                    <!-- Logo and Title -->
+                    <div class="text-center mb-8">
+                        <h2 class="text-4xl font-bold mb-2">
+                            Welcome to <span class="text-gym-primary">EL GYMNASIO</span>
+                        </h2>
+                        <p class="text-gray-300">More Than A GYM , It's A Lifestyle</p>
+                    </div>
+
+                    <!-- Role Selection Dropdown -->
+                    <div class="mb-6">
+                        <label for="userRole" class="block text-sm font-semibold text-gray-300 mb-2">Select Role</label>
+                        <select id="userRole" onchange="handleRoleChange()" 
+                                class="w-full p-4 bg-gym-dark rounded-lg text-white border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300">
+                            <option value="">Choose your role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="space-y-6 hidden">
+                        <div>
+                            <label for="username" class="block text-sm font-semibold text-gray-300 mb-2">Username</label>
+                            <div class="relative">
+                                <i class='bx bx-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="text" id="username" required
+                                       class="w-full pl-12 pr-4 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Enter your username">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-gray-300 mb-2">Password</label>
+                            <div class="relative">
+                                <i class='bx bx-lock-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="password" id="password" required
+                                       class="w-full pl-12 pr-12 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Enter your password">
+                                <button type="button" onclick="togglePassword('password')" 
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gym-primary">
+                                    <i class='bx bx-hide' id="passwordToggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" 
+                                class="w-full bg-gym-primary hover:bg-gym-primary/80 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 animate-pulse-glow">
+                            <span id="loginButtonText">Login</span>
+                        </button>
+
+                        <!-- Register Link for Users -->
+                        <div id="registerLink" class="text-center hidden">
+                            <p class="text-gray-300">Don't have an account? 
+                                <button type="button" onclick="showRegisterForm()" 
+                                        class="text-gym-primary hover:underline font-semibold">
+                                    Register here
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="space-y-6 hidden">
+                        <div class="text-center mb-6">
+                            <h3 class="text-2xl font-bold text-gym-primary">Create Account</h3>
+                            <p class="text-gray-300">Join the EL GYMNASIO community</p>
+                        </div>
+
+                        <div>
+                            <label for="fullName" class="block text-sm font-semibold text-gray-300 mb-2">Full Name</label>
+                            <div class="relative">
+                                <i class='bx bx-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="text" id="fullName" required
+                                       class="w-full pl-12 pr-4 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Enter your full name">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <i class='bx bx-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="email" id="email" required
+                                       class="w-full pl-12 pr-4 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Enter your email">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="regPassword" class="block text-sm font-semibold text-gray-300 mb-2">Password</label>
+                            <div class="relative">
+                                <i class='bx bx-lock-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="password" id="regPassword" required
+                                       class="w-full pl-12 pr-12 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Create a password">
+                                <button type="button" onclick="togglePassword('regPassword')" 
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gym-primary">
+                                    <i class='bx bx-hide' id="regPasswordToggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-semibold text-gray-300 mb-2">Confirm Password</label>
+                            <div class="relative">
+                                <i class='bx bx-lock-alt absolute left-4 top-1/2 transform -translate-y-1/2 text-gym-primary'></i>
+                                <input type="password" id="confirmPassword" required
+                                       class="w-full pl-12 pr-12 py-4 bg-gym-dark rounded-lg text-white placeholder-gray-400 border border-gym-primary/20 focus:border-gym-primary focus:outline-none transition-colors duration-300"
+                                       placeholder="Confirm your password">
+                                <button type="button" onclick="togglePassword('confirmPassword')" 
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gym-primary">
+                                    <i class='bx bx-hide' id="confirmPasswordToggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" 
+                                class="w-full bg-gym-primary hover:bg-gym-primary/80 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            Create Account
+                        </button>
+
+                        <div class="text-center">
+                            <p class="text-gray-300">Already have an account? 
+                                <button type="button" onclick="showLoginForm()" 
+                                        class="text-gym-primary hover:underline font-semibold">
+                                    Login here
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="successMessage" class="hidden text-center">
+                        <div class="mb-6">
+                            <i class='bx bx-check-circle text-6xl text-green-500 mb-4'></i>
+                            <h3 class="text-2xl font-bold text-green-500 mb-2">Registration Successful!</h3>
+                            <p class="text-gray-300 mb-6">Welcome to EL GYMNASIO! You can now login with your credentials.</p>
+                            <button onclick="showLoginForm()" 
+                                    class="bg-gym-primary hover:bg-gym-primary/80 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
+                                Go to Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        
+    </section>
+
+    <script>
+        function handleRoleChange() {
+            const roleSelect = document.getElementById('userRole');
+            const loginForm = document.getElementById('loginForm');
+            const registerLink = document.getElementById('registerLink');
+            const loginButtonText = document.getElementById('loginButtonText');
+            
+            if (roleSelect.value) {
+                loginForm.classList.remove('hidden');
+                
+                if (roleSelect.value === 'user') {
+                    registerLink.classList.remove('hidden');
+                    loginButtonText.textContent = 'Login as User';
+                } else {
+                    registerLink.classList.add('hidden');
+                    loginButtonText.textContent = 'Login as Admin';
+                }
+            } else {
+                loginForm.classList.add('hidden');
+            }
+            
+            // Hide register form and success message when role changes
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+
+        function showRegisterForm() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
+
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(fieldId + 'ToggleIcon');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'bx bx-show';
+            } else {
+                field.type = 'password';
+                icon.className = 'bx bx-hide';
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Handle Login Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('userRole').value;
+            
+            // Simulate login process
+            if (username && password) {
+                alert(`Login successful! Welcome ${role === 'admin' ? 'Admin' : 'User'}: ${username}`);
+                // Here you would typically redirect to dashboard
+            }
+        });
+
+        // Handle Register Form Submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const regPassword = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (regPassword !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Simulate registration process
+            if (fullName && email && regPassword) {
+                document.getElementById('registerForm').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
